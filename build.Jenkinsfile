@@ -5,7 +5,7 @@ pipeline {
         AWS_DEFAULT_REGION = 'eu-west-2'
         REGISTRY = '700935310038.dkr.ecr.eu-west-2.amazonaws.com'
         IMAGE_NAME = 'idot-yolo5'
-        BUILD_NUMBER = "${env.BUILD_NUMBER}"
+
 
     }
     stages {
