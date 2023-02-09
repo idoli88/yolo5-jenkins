@@ -17,6 +17,10 @@ pipeline {
                 docker push $REGISTRY/$IMAGE_NAME:latest
                 '''
             }
+        post {
+        always {
+            sh docker image prune -a --filter "until=72h" -f
         }
+
     }
 }
