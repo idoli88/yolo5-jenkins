@@ -4,10 +4,12 @@ pipeline {
     stages {
         stage('Unittest') {
             steps {
-                echo "testing"
+                echo "testing2"
                 sh '''
                 pip install -r requirements.txt
                 python3 -m pytest --junitxml results.xml tests
+
+
                 '''
             }
         }
