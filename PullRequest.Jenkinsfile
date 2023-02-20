@@ -6,7 +6,7 @@ pipeline {
             steps {
                 echo "testing2"
                 sh '''
-                pip install -r requirements.txt
+                pip3 install -r requirements.txt
                 python3 -m pytest --junitxml results.xml tests
 
 
