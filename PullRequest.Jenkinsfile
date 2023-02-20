@@ -11,6 +11,7 @@ pipeline {
 
 
                 '''
+                }
             post {
                 always {
                     junit allowEmptyResults: true, testResults: 'results.xml'
