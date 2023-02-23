@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image '700935310038.dkr.ecr.eu-west-2.amazonaws.com/idot-jenkins-agent:latest'
+            args  '--user root -v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {
         REGISTRY_URL = '700935310038.dkr.ecr.eu-west-2.amazonaws.com'
