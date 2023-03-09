@@ -5,6 +5,7 @@ pipeline {
         stage('install dependencies') {
             steps {
                 sh '''
+                cd fantastic_ascii
                 pip3 install build twine
                 '''
 
@@ -13,6 +14,7 @@ pipeline {
         stage('build package') {
             steps {
                 sh '''
+                cd fantastic_ascii
                 python3 -m build
                 '''
             }
