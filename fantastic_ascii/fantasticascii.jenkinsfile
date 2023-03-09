@@ -2,16 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('install dependencies') {
+        stage('Install dependencies') {
             steps {
                 sh '''
-                cd fantastic_ascii
                 pip3 install build twine
                 '''
-
             }
         }
-        stage('build package') {
+        stage('Build') {
             steps {
                 sh '''
                 cd fantastic_ascii
@@ -19,17 +17,25 @@ pipeline {
                 '''
             }
         }
-        stage('publish package') {
+
+        stage('Publish') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                withCredentials([
+                    usernamePassword(credentialsId: 'nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')
+                ]) {
                     sh '''
                     cd fantastic_ascii
-                    sed -i -e "s/USERNAME/$USERNAME/g" .pypirc
-                    sed -i -e "s/PASSWORD/$PASSWORD/g" .pypirc
+                    sed -i -e "s/<username>/$USERNAME/g" .pypirc
+                    sed -i -e "s/<password>/$PASSWORD/g" .pypirc
                     python3 -m twine upload --config-file .pypirc --repository pypi-hosted dist/*
                     '''
                 }
             }
+        }
+    }
+    post {
+        always {
+            cleanWs()
         }
     }
 }
