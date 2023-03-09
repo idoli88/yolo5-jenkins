@@ -23,7 +23,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh '''
-
+                    cd fantastic_ascii
                     sed -i -e "s/USERNAME/$USERNAME/g" .pypirc
                     sed -i -e "s/PASSWORD/$PASSWORD/g" .pypirc
                     python3 -m twine upload --confiq-file .pypirc --repository pypi-hodted dist/*
