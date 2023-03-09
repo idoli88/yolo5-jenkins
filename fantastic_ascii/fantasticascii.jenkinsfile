@@ -26,7 +26,7 @@ pipeline {
                     cd fantastic_ascii
                     sed -i -e "s/USERNAME/$USERNAME/g" .pypirc
                     sed -i -e "s/PASSWORD/$PASSWORD/g" .pypirc
-                    python3 -m twine upload --confiq-file .pypirc --repository pypi-hosted dist/*
+                    python3 -m twine upload --config-file .pypirc --repository pypi-hosted dist/*
                     '''
                 }
             }
