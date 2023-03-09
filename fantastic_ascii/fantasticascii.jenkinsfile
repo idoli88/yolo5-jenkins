@@ -1,0 +1,31 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('install dependencies') {
+            steps {
+                sh '''
+                pip3 install build twine
+                '''
+
+            }
+        }
+        stage('build package') {
+            steps {
+                sh '''
+                python3 -m build
+                '''
+            }
+        }
+        stage('publish package') {
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'nexus', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh '''
+
+                    sed -i -e "s/USERNAME/$USERNAME/g" .pypirc
+                    sed -i -e "s/PASSWORD/$PASSWORD/g" .pypirc
+                    python3 -m twine upload --confiq-file .pypirc --repository pypi-hodted dist/*
+                    '''
+                }
+            }
+        }
