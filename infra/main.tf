@@ -14,7 +14,7 @@ terraform {
   backend "s3" {
     bucket = "idot-test-bucket"
     key    = "tfstate-eu-north-1.json"
-    region = "eu-west-2"
+    region = "us-east-1"
     # optional: dynamodb_table = "<table-name>"
   }
 
