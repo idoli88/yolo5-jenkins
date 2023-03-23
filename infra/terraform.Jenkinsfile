@@ -12,8 +12,8 @@ pipeline {
             steps {
                 sh """
                 cd infra
-                terraform init -- no color
-                terraform plan -out tfplan_out --no-color
+                terraform init
+                terraform plan -out tfplan_out
 
                 """
             }
