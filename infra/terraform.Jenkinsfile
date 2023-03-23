@@ -10,14 +10,21 @@ pipeline {
     stages {
         stage('Plan') {
             steps {
-                sh "terraform plan -out tfplan_out"
+                sh """
+                cd infra
+                terraform init
+                terraform plan -out tfplan_out
+
+                """
             }
         }
 
         stage('Approval') {
-            // run only if autoApprove = false
+            when { expression} {
+                return params.autoApprove
+            }
             steps {
-                sh ''
+                input message: 'Apply the changes?'
             }
         }
 
