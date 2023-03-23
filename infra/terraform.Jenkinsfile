@@ -13,31 +13,35 @@ pipeline {
                 sh """
                 cd infra
                 terraform init
-                terraform plan -out tfplan_out
-
+                terraform plan -var='env=${params.env}' -var='region=${params.region}' -out=tfplan_out
                 """
             }
         }
 
         stage('Approval') {
-            when { expression} {
-                return params.autoApprove
+            when {
+                expression {
+                    return !params.autoApprove
+                }
             }
             steps {
-                input message: 'Apply the changes?'
+                input message: 'Do you want to apply the Terraform plan?', submitter: 'admin'
             }
         }
 
         stage('Apply') {
             steps {
-                sh "terraform apply tfplan_out"
+                sh """
+                cd infra
+                terraform apply tfplan_out
+                """
             }
         }
     }
 
     post {
         always {
-            archiveArtifacts artifacts: 'tfplan_out'
+            archiveArtifacts artifacts: 'infra/tfplan_out'
         }
     }
 }
