@@ -8,5 +8,5 @@ variable "env" {
 variable "resource_alias" {
   description = "Your name"
   type        = string
-  default     = "alonit"
+  default     = "idot"
 }

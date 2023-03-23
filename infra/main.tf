@@ -12,9 +12,9 @@ terraform {
   }
 
   backend "s3" {
-    bucket = "alonit-test-bucket"
+    bucket = "idot-test-bucket"
     key    = "tfstate-eu-north-1.json"
-    region = "eu-north-1"
+    region = "eu-west-2"
     # optional: dynamodb_table = "<table-name>"
   }
 
@@ -27,7 +27,7 @@ terraform {
  You can use multiple provider blocks in your Terraform configuration to manage resources from different providers.
 */
 provider "aws" {
-  region  = "eu-north-1"
+  region  = "eu-west-2"
 }
 
 
@@ -44,7 +44,7 @@ resource "aws_instance" "app_server" {
   ami           = data.aws_ami.amazon_linux_ami.id
   instance_type = var.env == "prod" ? "t3.micro" : "t3.nano"
   vpc_security_group_ids = [aws_security_group.sg_web.id, aws_security_group.sg_ssh.id]
-  key_name = "alonit-key"
+  key_name = "london-key"
 
   subnet_id = module.app_vpc.public_subnets[0]
 
@@ -53,14 +53,14 @@ resource "aws_instance" "app_server" {
   ]
 
   tags = {
-    Name = "alonit-terraform-${var.env}"
+    Name = "idot-terraform-${var.env}"
     Terraform = "true111"
     fff = "fff"
   }
 }
 
 resource "aws_s3_bucket" "data_bucket" {
-  bucket = "alonit-tf-demo-4"
+  bucket = "idot-tf-demo-4"
 
   lifecycle {
     prevent_destroy = true
@@ -129,7 +129,7 @@ module "app_vpc" {
 
 
 resource "aws_security_group" "sg_ssh" {
-  name = "alonitterraofrmsg"
+  name = "idotterraofrmsg"
   description = "aaa"
   vpc_id      = module.app_vpc.vpc_id
 
