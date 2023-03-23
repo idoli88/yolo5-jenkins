@@ -34,7 +34,10 @@ pipeline {
 
         stage('Apply') {
             steps {
-                sh "terraform apply tfplan_out"
+                sh """
+                cd infra
+                terraform apply tfplan_out -auto-approve -var-file=env/${env}.tfvars
+                """
 
             }
         }
